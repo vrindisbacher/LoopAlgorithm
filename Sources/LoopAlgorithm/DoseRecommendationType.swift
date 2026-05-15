@@ -9,7 +9,7 @@
 import Foundation
 
 
-public enum DoseRecommendationType: String {
+public enum DoseRecommendationType: String, Codable {
     case manualBolus
     case automaticBolus
     case tempBasal

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AutomaticDoseRecommendation: Equatable {
+public struct AutomaticDoseRecommendation: Equatable, Codable {
     
     public enum Direction: String, Codable {
         case decrease
@@ -38,7 +38,7 @@ public struct AutomaticDoseRecommendation: Equatable {
     }
 }
 
-extension AutomaticDoseRecommendation: Codable {
+extension AutomaticDoseRecommendation {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         // Provide default TempBasalRecommendation if basalAdjustment is missing

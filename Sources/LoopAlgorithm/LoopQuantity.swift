@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct LoopQuantity: Hashable, Equatable, Comparable, Sendable {
+public struct LoopQuantity: Hashable, Equatable, Comparable, Sendable, Codable {
 
     public let unit: LoopUnit
     private let value: Double

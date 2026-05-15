@@ -1,0 +1,44 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:LoopAlgorithm}",
+            "name": "Debug LoopAlgorithmRunner",
+            "target": "LoopAlgorithmRunner",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug LoopAlgorithmRunner"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:LoopAlgorithm}",
+            "name": "Release LoopAlgorithmRunner",
+            "target": "LoopAlgorithmRunner",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release LoopAlgorithmRunner"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:LoopAlgorithm}",
+            "name": "Debug LoopWasm",
+            "target": "LoopWasm",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug LoopWasm"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:LoopAlgorithm}",
+            "name": "Release LoopWasm",
+            "target": "LoopWasm",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release LoopWasm"
+        }
+    ]
+}

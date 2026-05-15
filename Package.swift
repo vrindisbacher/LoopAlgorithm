@@ -12,29 +12,37 @@ let package = Package(
         .watchOS(.v8)
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "LoopAlgorithm",
-            targets: ["LoopAlgorithm"]),
-        .executable(name: "LoopAlgorithmRunner", targets: ["LoopAlgorithmRunner"])
+            targets: ["LoopAlgorithm"]
+        ),
+
+        // .executable(
+        //     name: "LoopAlgorithmRunner",
+        //     targets: ["LoopAlgorithmRunner"]
+        // ),
+
+        .executable(
+            name: "LoopWasm",
+            targets: ["LoopWasm"]
+        )
     ],
+
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "LoopAlgorithm"
         ),
+
+        // .executableTarget(
+        //     name: "LoopAlgorithmRunner",
+        //     dependencies: ["LoopAlgorithm"]
+        // ),
+
         .executableTarget(
-                    name: "LoopAlgorithmRunner",
-                    dependencies: ["LoopAlgorithm"]
+            name: "LoopWasm",
+            dependencies: ["LoopAlgorithm"]
         ),
-        .testTarget(
-            name: "LoopAlgorithmTests",
-            dependencies: ["LoopAlgorithm"],
-            resources: [
-                .copy("Fixtures")
-            ]
-        )
     ],
+
     swiftLanguageModes: [.v6]
 )
