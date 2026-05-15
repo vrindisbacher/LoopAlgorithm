@@ -1,6 +1,7 @@
 import Foundation
 import LoopAlgorithm
 
+// stub for running the loop algorithm
 @_expose(wasm, "run_algorithm")
 public func run_algorithm(
     // Pointer to bytebuffer containing serialized AlgorithmInputFixture
@@ -19,4 +20,16 @@ public func run_algorithm(
     let outputData = try! JSONEncoder().encode(output)
     outputData.copyBytes(to: outputPtr, count: outputData.count)
     return Int32(outputData.count)
+}
+
+// stub to get swift to manage allocating memory in the WASM sandbox
+@_expose(wasm, "alloc")
+public func alloc(size: Int32) -> UnsafeMutableRawPointer {
+    return UnsafeMutableRawPointer.allocate(byteCount: Int(size), alignment: 8)
+}
+
+// stub to get swift to manage deallocating memory in the WASM sandbox
+@_expose(wasm, "dealloc")
+public func dealloc(ptr: UnsafeMutableRawPointer, size: Int32) {
+    ptr.deallocate()
 }
