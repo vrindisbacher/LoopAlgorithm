@@ -30,6 +30,6 @@ public func alloc(size: Int32) -> UnsafeMutableRawPointer {
 
 // stub to get swift to manage deallocating memory in the WASM sandbox
 @_expose(wasm, "dealloc")
-public func dealloc(ptr: UnsafeMutableRawPointer, size: Int32) {
+public func dealloc(ptr: UnsafeMutableRawPointer) {
     ptr.deallocate()
 }
