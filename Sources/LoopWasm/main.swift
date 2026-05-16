@@ -14,10 +14,15 @@ public func run_algorithm(
     outputMaxLen: Int32
 ) -> Int32 {
     let inputData = Data(bytes: inputPtr, count: Int(inputLen))
-    let input = try! JSONDecoder().decode(AlgorithmInputFixture.self, from: inputData)
+    let decoder = JSONDecoder()
+    decoder.dateDecodingStrategy = .iso8601
+    let input = try! decoder.decode(AlgorithmInputFixture.self, from: inputData)
+
     let output = LoopAlgorithm.run(input: input)
 
-    let outputData = try! JSONEncoder().encode(output)
+    let encoder = JSONEncoder()
+    encoder.dateEncodingStrategy = .iso8601
+    let outputData = try! encoder.encode(output)
     outputData.copyBytes(to: outputPtr, count: outputData.count)
     return Int32(outputData.count)
 }
