@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v13),
         .iOS(.v15),
         .tvOS(.v15),
-        .watchOS(.v8)
+        .watchOS(.v8),
     ],
     products: [
         .library(
@@ -25,22 +25,32 @@ let package = Package(
         .executable(
             name: "LoopWasm",
             targets: ["LoopWasm"]
-        )
+        ),
+    ],
+
+    dependencies: [
+        .package(url: "https://github.com/google/flatbuffers", exact: "24.3.25")
     ],
 
     targets: [
         .target(
             name: "LoopAlgorithm"
         ),
-
-        // .executableTarget(
-        //     name: "LoopAlgorithmRunner",
-        //     dependencies: ["LoopAlgorithm"]
-        // ),
+        .target(
+            name: "LoopAlgorithmFBS",
+            dependencies: [
+                "LoopAlgorithm",
+                .product(name: "FlatBuffers", package: "flatbuffers"),
+            ]
+        ),
 
         .executableTarget(
             name: "LoopWasm",
-            dependencies: ["LoopAlgorithm"]
+            dependencies: [
+                "LoopAlgorithm",
+                "LoopAlgorithmFBS",
+                .product(name: "FlatBuffers", package: "flatbuffers"),
+            ]
         ),
     ],
 

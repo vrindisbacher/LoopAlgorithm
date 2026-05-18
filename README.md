@@ -13,7 +13,11 @@ Please understand that this project:
 
 There is a command line utility that will run the algorithm with a scenario input file:
 
-```
+```bash
 swift build
 ./.build/debug/LoopAlgorithmRunner Tests/LoopAlgorithmTests/Fixtures/suspend_scenario.json > output.json
 ```
+
+### LoopAlgorithmFBS
+
+Flat buffer types for LoopWasm. Make sure the flatc version you build the `.fbs` file is the same as the Flat Buffer dependency specified in Package.swift

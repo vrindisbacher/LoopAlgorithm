@@ -39,6 +39,26 @@
             "target": "LoopWasm",
             "configuration": "release",
             "preLaunchTask": "swift: Build Release LoopWasm"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:LoopAlgorithm}",
+            "name": "Debug LoopAlgorithmFBS",
+            "target": "LoopAlgorithmFBS",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug LoopAlgorithmFBS"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:LoopAlgorithm}",
+            "name": "Release LoopAlgorithmFBS",
+            "target": "LoopAlgorithmFBS",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release LoopAlgorithmFBS"
         }
     ]
 }

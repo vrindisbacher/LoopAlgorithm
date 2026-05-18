@@ -1,5 +1,7 @@
+import FlatBuffers
 import Foundation
 import LoopAlgorithm
+import LoopAlgorithmFBS
 
 // stub for running the loop algorithm
 @_expose(wasm, "run_algorithm")
@@ -13,12 +15,13 @@ public func run_algorithm(
     // The max length of the byte buffer (The number of bytes written is returned by the function)
     outputMaxLen: Int32
 ) -> Int32 {
-    let inputData = Data(bytes: inputPtr, count: Int(inputLen))
-    let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .iso8601
-    let input = try! decoder.decode(AlgorithmInputFixture.self, from: inputData)
+    let bb = ByteBuffer(
+        assumingMemoryBound: UnsafeMutableRawPointer(mutating: inputPtr), capacity: Int(inputLen))
+    let rootOffset = bb.read(def: Int32.self, position: bb.reader) + Int32(bb.reader)
+    let input = FBSLoopAlgorithmInputFixture(bb, o: rootOffset)
 
-    let output = LoopAlgorithm.run(input: input)
+    let algoInput = convertInput(input)
+    let output = LoopAlgorithm.run(input: algoInput)
 
     let encoder = JSONEncoder()
     encoder.dateEncodingStrategy = .iso8601

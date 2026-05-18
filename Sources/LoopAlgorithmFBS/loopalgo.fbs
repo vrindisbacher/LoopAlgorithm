@@ -1,0 +1,137 @@
+
+
+// date uses ISO 8601 format: we'll use double's and 
+// then handle the conversion in each wrapper
+
+enum FBSLoopUnit: byte {
+    gram,
+    gramsPerUnit,
+    internationalUnit,
+    internationalUnitsPerHour,
+    milligramsPerDeciliter,
+    milligramsPerDeciliterPerSecond,
+    milligramsPerDeciliterPerMinute,
+    milligramsPerDeciliterPerInternationalUnit,
+    millimolesPerLiter,
+    millimolesPerLiterPerSecond,
+    millimolesPerLiterPerMinute,
+    millimolesPerLiterPerInternationalUnit,
+    percent,
+    hour,
+    minute,
+    second,
+}
+
+table FBSLoopQuantity {
+    unit: FBSLoopUnit;
+    value: double;
+}
+
+enum FBSGlucoseCondition: byte {
+    belowRange,
+    aboveRange
+}
+
+table FBSFixtureGlucoseSample {
+    provenanceIdentifier: string;
+    startDate: double; // date
+    quantity: FBSLoopQuantity;
+    isDisplayOnly: bool;
+    wasUserEntered: bool;
+    // condition and trend rate are optional
+    // but table fields are null by default 
+    // so we don't need to worry about assigning 
+    // default values of null here
+    condition: FBSGlucoseCondition;
+    trendRate: FBSLoopQuantity;
+}
+
+enum FBSInsulinDeliveryType: byte {
+    bolus,
+    basal
+}
+
+enum FBSFixtureInsulinType: byte {
+    novolog,
+    humalog,
+    apidra,
+    fiasp,
+    lyumjev,
+    afrezza,
+}
+
+table FBSFixtureInsulinDose {
+    deliveryType: FBSInsulinDeliveryType;
+    startDate: double; // date
+    endDate: double; // date
+    volume: double;
+    insulinType: FBSFixtureInsulinType;
+}
+
+table FBSFixtureCarbEntry {
+    absorptionTime: double = null; // this is a TimeInterval which is aliased to a double
+    startDate: double; // date
+    quantity: FBSLoopQuantity;
+    // optional field but string in a table is null by default
+    foodType: string;
+}
+
+table FBSAbsoluteScheduleValueOfDouble {
+    startDate: double; // date
+    endDate: double; // date
+    value: double; // Note: Usually generic T but flat buffers doesn't support it...
+}
+
+table FBSAbsoluteScheduleValueOfLoopQuantity {
+    startDate: double; // date
+    endDate: double; // date
+    value: FBSLoopQuantity; // Note: Usually generic T but flat buffers doesn't support it...
+}
+
+table FBSClosedRangeOfLoopQuantity {
+    lowerBound: FBSLoopQuantity;
+    upperBound: FBSLoopQuantity;
+}
+
+table FBSAbsoluteScheduleValueOfClosedRangeOfLoopQuantity {
+    startDate: double; // date
+    endDate: double; // date
+    value: FBSClosedRangeOfLoopQuantity; // Note: Usually generic T but flat buffers doesn't support it...
+}
+
+enum FBSCarbAbsorptionModel: byte {
+    linear = 0,
+    piecewiseLinear = 1
+}
+
+enum FBSDoseRecommendationType: byte {
+    manualBolus,
+    automaticBolus,
+    tempBasal
+}
+
+table FBSLoopAlgorithmInputFixture {
+    predictionStart: double; // date
+    glucoseHistory: [FBSFixtureGlucoseSample];
+    doses: [FBSFixtureInsulinDose];
+    carbEntries: [FBSFixtureCarbEntry];
+    basal: [FBSAbsoluteScheduleValueOfDouble];
+    sensitivity: [FBSAbsoluteScheduleValueOfLoopQuantity];
+    carbRatio: [FBSAbsoluteScheduleValueOfDouble];
+    target: [FBSAbsoluteScheduleValueOfClosedRangeOfLoopQuantity];
+    // Optional field but table types are null by default
+    suspendThreshold: FBSLoopQuantity;
+    maxBolus: double;
+    maxActiveInsulinMultiplier: double = null;
+    maxBasalRate: double;
+    useIntegralRetrospectiveCorrection: bool = false;
+    useMidAbsorptionISF: bool = false;
+    includePositiveVelocityAndRC: bool = true;
+    carbAbsorptionModel: FBSCarbAbsorptionModel = piecewiseLinear;
+    recommendationInsulinType: FBSFixtureInsulinType = novolog;
+    recommendationType: FBSDoseRecommendationType = automaticBolus;
+    automaticbolusapplicationfactor: double = null;
+    gradualtransitionsthreshold: double = 40.0;
+}
+
+root_type FBSLoopAlgorithmInputFixture;
