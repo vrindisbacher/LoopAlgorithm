@@ -43,6 +43,7 @@ let package = Package(
         //         .product(name: "FlatBuffers", package: "flatbuffers"),
         //     ]
         // ),
+
         .target(
             name: "FoundationShim"
         ),

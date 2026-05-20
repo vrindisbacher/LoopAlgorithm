@@ -6,9 +6,10 @@
 //
 
 #if !arch(wasm32)
-import Foundation
+    import Foundation
 #else
 import FoundationShim
+    import FoundationShim
 #endif
 
 public protocol GlucoseValue: SampleValue {
@@ -25,7 +26,7 @@ public struct SimpleGlucoseValue: Equatable, GlucoseValue {
         self.quantity = quantity
     }
 
-    public init(_ glucoseValue: GlucoseValue) {
+    public init<G: GlucoseValue>(_ glucoseValue: G) {
         self.startDate = glucoseValue.startDate
         self.endDate = glucoseValue.endDate
         self.quantity = glucoseValue.quantity

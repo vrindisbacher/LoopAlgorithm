@@ -6,9 +6,10 @@
 //
 
 #if !arch(wasm32)
-import Foundation
+    import Foundation
 #else
 import FoundationShim
+    import FoundationShim
 #endif
 
 public enum AlgorithmInputFixtureDecodingError: Error {
@@ -40,7 +41,7 @@ public struct AlgorithmInputFixture: AlgorithmInput {
     public var automaticBolusApplicationFactor: Double?
     public var gradualTransitionsThreshold: Double?
 
-    public var recommendationInsulinModel: InsulinModel {
+    public var recommendationInsulinModel: ExponentialInsulinModel {
         recommendationInsulinType.insulinModel
     }
 

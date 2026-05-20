@@ -6,9 +6,10 @@
 //
 
 #if !arch(wasm32)
-import Foundation
+    import Foundation
 #else
 import FoundationShim
+    import FoundationShim
 #endif
 
 let UnitMolarMassBloodGlucose = 180.1558800000541
@@ -31,86 +32,89 @@ public enum LoopUnit: Sendable, CaseIterable {
     case hour
     case minute
     case second
-    
+
     public init(from string: String) {
         self = LoopUnit.allCases.first(where: { $0.unitString == string }) ?? .gram
     }
-    
+
     public func conversionFactor(toUnit: LoopUnit) -> Double? {
         switch (self, toUnit) {
         case (.gram, .gram),
-             (.gramsPerUnit, .gramsPerUnit),
-             (.internationalUnit, .internationalUnit),
-             (.internationalUnitsPerHour, .internationalUnitsPerHour),
-             (.milligramsPerDeciliter, .milligramsPerDeciliter),
-             (.milligramsPerDeciliterPerSecond, .milligramsPerDeciliterPerSecond),
-             (.milligramsPerDeciliterPerMinute, .milligramsPerDeciliterPerMinute),
-             (.milligramsPerDeciliterPerInternationalUnit, .milligramsPerDeciliterPerInternationalUnit),
-             (.millimolesPerLiter, .millimolesPerLiter),
-             (.millimolesPerLiterPerSecond, .millimolesPerLiterPerSecond),
-             (.millimolesPerLiterPerMinute, .millimolesPerLiterPerMinute),
-             (.millimolesPerLiterPerInternationalUnit, .millimolesPerLiterPerInternationalUnit),
-             (.percent, .percent),
-             (.hour, .hour),
-             (.minute, .minute),
-             (.second, .second):
+            (.gramsPerUnit, .gramsPerUnit),
+            (.internationalUnit, .internationalUnit),
+            (.internationalUnitsPerHour, .internationalUnitsPerHour),
+            (.milligramsPerDeciliter, .milligramsPerDeciliter),
+            (.milligramsPerDeciliterPerSecond, .milligramsPerDeciliterPerSecond),
+            (.milligramsPerDeciliterPerMinute, .milligramsPerDeciliterPerMinute),
+            (
+                .milligramsPerDeciliterPerInternationalUnit,
+                .milligramsPerDeciliterPerInternationalUnit
+            ),
+            (.millimolesPerLiter, .millimolesPerLiter),
+            (.millimolesPerLiterPerSecond, .millimolesPerLiterPerSecond),
+            (.millimolesPerLiterPerMinute, .millimolesPerLiterPerMinute),
+            (.millimolesPerLiterPerInternationalUnit, .millimolesPerLiterPerInternationalUnit),
+            (.percent, .percent),
+            (.hour, .hour),
+            (.minute, .minute),
+            (.second, .second):
             return 1
         case (.milligramsPerDeciliterPerSecond, .milligramsPerDeciliterPerMinute),
-             (.millimolesPerLiterPerSecond, .millimolesPerLiterPerMinute):
+            (.millimolesPerLiterPerSecond, .millimolesPerLiterPerMinute):
             return 60
         case (.second, .minute),
-             (.minute, .hour):
-            return 1/60
+            (.minute, .hour):
+            return 1 / 60
         case (.milligramsPerDeciliterPerMinute, .milligramsPerDeciliterPerSecond),
-             (.millimolesPerLiterPerMinute, .millimolesPerLiterPerSecond):
-            return 1/60
+            (.millimolesPerLiterPerMinute, .millimolesPerLiterPerSecond):
+            return 1 / 60
         case (.minute, .second),
-             (.hour, .minute):
+            (.hour, .minute):
             return 60
         case (.second, .hour):
-            return 1/3600
+            return 1 / 3600
         case (.hour, .second):
             return 3600
         case (.milligramsPerDeciliter, .millimolesPerLiter),
-             (.milligramsPerDeciliterPerSecond, .millimolesPerLiterPerSecond),
-             (.milligramsPerDeciliterPerMinute, .millimolesPerLiterPerMinute),
-             (.milligramsPerDeciliterPerInternationalUnit, .millimolesPerLiterPerInternationalUnit):
-            return 1/UnitMolarMassBloodGlucoseDivisible
+            (.milligramsPerDeciliterPerSecond, .millimolesPerLiterPerSecond),
+            (.milligramsPerDeciliterPerMinute, .millimolesPerLiterPerMinute),
+            (.milligramsPerDeciliterPerInternationalUnit, .millimolesPerLiterPerInternationalUnit):
+            return 1 / UnitMolarMassBloodGlucoseDivisible
         case (.milligramsPerDeciliterPerSecond, .millimolesPerLiterPerMinute):
-            return 1/UnitMolarMassBloodGlucoseDivisible / 60
+            return 1 / UnitMolarMassBloodGlucoseDivisible / 60
         case (.milligramsPerDeciliterPerMinute, .millimolesPerLiterPerSecond):
-            return 1/UnitMolarMassBloodGlucoseDivisible * 60
+            return 1 / UnitMolarMassBloodGlucoseDivisible * 60
         case (.millimolesPerLiter, .milligramsPerDeciliter),
-             (.millimolesPerLiterPerSecond, .milligramsPerDeciliterPerSecond),
-             (.millimolesPerLiterPerMinute, .milligramsPerDeciliterPerMinute),
-             (.millimolesPerLiterPerInternationalUnit, .milligramsPerDeciliterPerInternationalUnit):
+            (.millimolesPerLiterPerSecond, .milligramsPerDeciliterPerSecond),
+            (.millimolesPerLiterPerMinute, .milligramsPerDeciliterPerMinute),
+            (.millimolesPerLiterPerInternationalUnit, .milligramsPerDeciliterPerInternationalUnit):
             return UnitMolarMassBloodGlucoseDivisible
         case (.millimolesPerLiterPerSecond, .milligramsPerDeciliterPerMinute):
             return UnitMolarMassBloodGlucoseDivisible / 60
         case (.millimolesPerLiterPerMinute, .milligramsPerDeciliterPerSecond):
             return UnitMolarMassBloodGlucoseDivisible * 60
         case (.gram, _),
-             (.gramsPerUnit, _),
-             (.internationalUnit, _),
-             (.internationalUnitsPerHour, _),
-             (.milligramsPerDeciliter, _),
-             (.milligramsPerDeciliterPerSecond, _),
-             (.milligramsPerDeciliterPerMinute, _),
-             (.milligramsPerDeciliterPerInternationalUnit, _),
-             (.millimolesPerLiter, _),
-             (.millimolesPerLiterPerSecond, _),
-             (.millimolesPerLiterPerMinute, _),
-             (.millimolesPerLiterPerInternationalUnit, _),
-             (.percent, _),
-             (.hour, _),
-             (.minute, _),
-             (.second, _):
+            (.gramsPerUnit, _),
+            (.internationalUnit, _),
+            (.internationalUnitsPerHour, _),
+            (.milligramsPerDeciliter, _),
+            (.milligramsPerDeciliterPerSecond, _),
+            (.milligramsPerDeciliterPerMinute, _),
+            (.milligramsPerDeciliterPerInternationalUnit, _),
+            (.millimolesPerLiter, _),
+            (.millimolesPerLiterPerSecond, _),
+            (.millimolesPerLiterPerMinute, _),
+            (.millimolesPerLiterPerInternationalUnit, _),
+            (.percent, _),
+            (.hour, _),
+            (.minute, _),
+            (.second, _):
             return nil
         default:
             fatalError()
         }
     }
-    
+
     public var unitString: String {
         switch self {
         case .gram:
@@ -147,17 +151,26 @@ public enum LoopUnit: Sendable, CaseIterable {
             return "s"
         }
     }
-    
+
     public var localizedShortUnitString: String {
         switch self {
-        case .millimolesPerLiter: return NSLocalizedString("mmol/L", comment: "The short unit display string for millimoles of glucose per liter")
-        case .milligramsPerDeciliter: return NSLocalizedString("mg/dL", comment: "The short unit display string for milligrams of glucose per decilter")
-        case .internationalUnit: return NSLocalizedString("U", comment: "The short unit display string for international units of insulin")
-        case .gram: return NSLocalizedString("g", comment: "The short unit display string for grams")
-        default: return String(describing: self)
+        case .millimolesPerLiter:
+            return NSLocalizedString(
+                "mmol/L",
+                comment: "The short unit display string for millimoles of glucose per liter")
+        case .milligramsPerDeciliter:
+            return NSLocalizedString(
+                "mg/dL",
+                comment: "The short unit display string for milligrams of glucose per decilter")
+        case .internationalUnit:
+            return NSLocalizedString(
+                "U", comment: "The short unit display string for international units of insulin")
+        case .gram:
+            return NSLocalizedString("g", comment: "The short unit display string for grams")
+        default: return "unknown"
         }
     }
-    
+
     public func unitDivided(by unit: LoopUnit) -> LoopUnit {
         switch self {
         case .milligramsPerDeciliter:
@@ -169,7 +182,9 @@ public enum LoopUnit: Sendable, CaseIterable {
             case .internationalUnit:
                 return .milligramsPerDeciliterPerInternationalUnit
             default:
-                fatalError("\(self.localizedShortUnitString) is not divisible by \(unit.localizedShortUnitString)")
+                fatalError(
+                    "\(self.localizedShortUnitString) is not divisible by \(unit.localizedShortUnitString)"
+                )
             }
         case .millimolesPerLiter:
             switch unit {
@@ -180,24 +195,32 @@ public enum LoopUnit: Sendable, CaseIterable {
             case .internationalUnit:
                 return .millimolesPerLiterPerInternationalUnit
             default:
-                fatalError("\(self.localizedShortUnitString) is not divisible by \(unit.localizedShortUnitString)")
+                fatalError(
+                    "\(self.localizedShortUnitString) is not divisible by \(unit.localizedShortUnitString)"
+                )
             }
         case .internationalUnit:
             switch unit {
             case .hour:
                 return .internationalUnitsPerHour
             default:
-                fatalError("\(self.localizedShortUnitString) is not divisible by \(unit.localizedShortUnitString)")
+                fatalError(
+                    "\(self.localizedShortUnitString) is not divisible by \(unit.localizedShortUnitString)"
+                )
             }
         case .gram:
             switch unit {
             case .internationalUnit:
                 return .gramsPerUnit
             default:
-                fatalError("\(self.localizedShortUnitString) is not divisible by \(unit.localizedShortUnitString)")
+                fatalError(
+                    "\(self.localizedShortUnitString) is not divisible by \(unit.localizedShortUnitString)"
+                )
             }
         default:
-            fatalError("\(self.localizedShortUnitString) is not divisible by \(unit.localizedShortUnitString)")
+            fatalError(
+                "\(self.localizedShortUnitString) is not divisible by \(unit.localizedShortUnitString)"
+            )
         }
     }
 }

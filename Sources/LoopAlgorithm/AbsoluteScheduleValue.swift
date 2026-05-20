@@ -5,9 +5,10 @@
 //
 
 #if !arch(wasm32)
-import Foundation
+    import Foundation
 #else
 import FoundationShim
+    import FoundationShim
 #endif
 
 public struct AbsoluteScheduleValue<T: Sendable>: TimelineValue, Sendable {

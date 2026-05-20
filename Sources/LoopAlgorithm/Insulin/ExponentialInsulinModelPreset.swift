@@ -6,9 +6,10 @@
 //
 
 #if !arch(wasm32)
-import Foundation
+    import Foundation
 #else
 import FoundationShim
+    import FoundationShim
 #endif
 
 public enum ExponentialInsulinModelPreset: String {
@@ -18,7 +19,6 @@ public enum ExponentialInsulinModelPreset: String {
     case lyumjev
     case afrezza
 }
-
 
 // MARK: - Model generation
 extension ExponentialInsulinModelPreset {
@@ -47,7 +47,7 @@ extension ExponentialInsulinModelPreset {
             return .minutes(55)
         case .lyumjev:
             return .minutes(55)
-        case.afrezza:
+        case .afrezza:
             return .minutes(29)
         }
     }
@@ -62,16 +62,16 @@ extension ExponentialInsulinModelPreset {
             return .minutes(10)
         case .lyumjev:
             return .minutes(10)
-        case.afrezza:
+        case .afrezza:
             return .minutes(10)
         }
     }
-    
-    public var model: InsulinModel {
-        return ExponentialInsulinModel(actionDuration: actionDuration, peakActivityTime: peakActivity, delay: delay)
+
+    public var model: ExponentialInsulinModel {
+        return ExponentialInsulinModel(
+            actionDuration: actionDuration, peakActivityTime: peakActivity, delay: delay)
     }
 }
-
 
 extension ExponentialInsulinModelPreset: InsulinModel {
     public var effectDuration: TimeInterval {

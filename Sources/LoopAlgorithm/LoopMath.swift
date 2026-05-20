@@ -98,7 +98,7 @@ public enum LoopMath {
 
      - returns: A timeline of glucose values
      */
-    public static func predictGlucose(startingAt startingGlucose: GlucoseValue, momentum: [GlucoseEffect] = [], effects: [GlucoseEffect]...) -> [PredictedGlucoseValue] {
+    public static func predictGlucose(startingAt startingGlucose: some GlucoseValue, momentum: [GlucoseEffect] = [], effects: [GlucoseEffect]...) -> [PredictedGlucoseValue] {
         return predictGlucose(startingAt: startingGlucose, momentum: momentum, effects: effects)
     }
 
@@ -117,7 +117,7 @@ public enum LoopMath {
 
      - returns: A timeline of glucose values
      */
-    public static func predictGlucose(startingAt startingGlucose: GlucoseValue, momentum: [GlucoseEffect] = [], effects: [[GlucoseEffect]]) -> [PredictedGlucoseValue] {
+    public static func predictGlucose(startingAt startingGlucose: some GlucoseValue, momentum: [GlucoseEffect] = [], effects: [[GlucoseEffect]]) -> [PredictedGlucoseValue] {
         var effectValuesAtDate: [Date: Double] = [:]
         let unit = LoopUnit.milligramsPerDeciliter
 

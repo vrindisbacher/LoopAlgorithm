@@ -27,7 +27,7 @@ public protocol RetrospectiveCorrection {
     ///   - retrospectiveCorrectionGroupingInterval: Duration of discrepancy measurements
     /// - Returns: Glucose correction effects
     func computeEffect(
-        startingAt startingGlucose: GlucoseValue,
+        startingAt startingGlucose: some GlucoseValue,
         retrospectiveGlucoseDiscrepanciesSummed: [GlucoseChange]?,
         recencyInterval: TimeInterval,
         retrospectiveCorrectionGroupingInterval: TimeInterval

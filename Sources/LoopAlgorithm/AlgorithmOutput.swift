@@ -8,6 +8,7 @@
 #if !arch(wasm32)
     import Foundation
 #else
+import FoundationShim
     import FoundationShim
 #endif
 

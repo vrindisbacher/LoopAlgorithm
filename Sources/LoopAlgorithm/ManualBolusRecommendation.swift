@@ -7,9 +7,10 @@
 //
 
 #if !arch(wasm32)
-import Foundation
+    import Foundation
 #else
 import FoundationShim
+    import FoundationShim
 #endif
 
 public enum BolusRecommendationNotice: Equatable {
@@ -35,14 +36,6 @@ extension BolusRecommendationNotice {
 
     private struct AllGlucoseBelowTarget {
         let minGlucose: SimpleGlucoseValue
-    }
-
-    private enum CodableKeys: String, CodingKey {
-        case glucoseBelowSuspendThreshold
-        case currentGlucoseBelowTarget
-        case predictedGlucoseBelowTarget
-        case predictedGlucoseInRange
-        case allGlucoseBelowTarget
     }
 }
 

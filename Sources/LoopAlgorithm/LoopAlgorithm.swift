@@ -6,9 +6,9 @@
 //
 
 #if !arch(wasm32)
-import Foundation
+    import Foundation
 #else
-import FoundationShim
+    import FoundationShim
 #endif
 
 public enum AlgorithmError: Error {
@@ -135,7 +135,7 @@ public struct LoopAlgorithm {
         useIntegralRetrospectiveCorrection: Bool = false,
         includingPositiveVelocityAndRC: Bool = true,
         useMidAbsorptionISF: Bool = false,
-        carbAbsorptionModel: CarbAbsorptionComputable = PiecewiseLinearAbsorption(),
+        carbAbsorptionModel: CarbAbsorptionModel = CarbAbsorptionModel.piecewiseLinear,
         gradualTransitionsThreshold: Double? = 40.0
     ) -> LoopPrediction<CarbType>
     where CarbType: CarbEntry, GlucoseType: GlucoseSampleValue, InsulinDoseType: InsulinDose {
@@ -217,26 +217,31 @@ public struct LoopAlgorithm {
         retrospectiveGlucoseDiscrepanciesSummed = retrospectiveGlucoseDiscrepancies.combinedSums(
             of: LoopMath.retrospectiveCorrectionGroupingInterval * 1.01)
 
-        let rc: RetrospectiveCorrection
-
-        if useIntegralRetrospectiveCorrection {
-            rc = IntegralRetrospectiveCorrection(
-                effectDuration: LoopMath.retrospectiveCorrectionEffectDuration)
-        } else {
-            rc = StandardRetrospectiveCorrection(
-                effectDuration: LoopMath.retrospectiveCorrectionEffectDuration)
-        }
-
         if let latestGlucose = glucoseHistory.last {
-            retrospectiveCorrectionEffects = rc.computeEffect(
-                startingAt: latestGlucose,
-                retrospectiveGlucoseDiscrepanciesSummed: retrospectiveGlucoseDiscrepanciesSummed,
-                recencyInterval: TimeInterval(minutes: 15),
-                retrospectiveCorrectionGroupingInterval: LoopMath
-                    .retrospectiveCorrectionGroupingInterval
-            )
+            if useIntegralRetrospectiveCorrection {
+                let rc = IntegralRetrospectiveCorrection(
+                    effectDuration: LoopMath.retrospectiveCorrectionEffectDuration)
+                retrospectiveCorrectionEffects = rc.computeEffect(
+                    startingAt: latestGlucose,
+                    retrospectiveGlucoseDiscrepanciesSummed:
+                        retrospectiveGlucoseDiscrepanciesSummed,
+                    recencyInterval: TimeInterval(minutes: 15),
+                    retrospectiveCorrectionGroupingInterval: LoopMath
+                        .retrospectiveCorrectionGroupingInterval
+                )
+            } else {
+                let rc = StandardRetrospectiveCorrection(
+                    effectDuration: LoopMath.retrospectiveCorrectionEffectDuration)
+                retrospectiveCorrectionEffects = rc.computeEffect(
+                    startingAt: latestGlucose,
+                    retrospectiveGlucoseDiscrepanciesSummed:
+                        retrospectiveGlucoseDiscrepanciesSummed,
+                    recencyInterval: TimeInterval(minutes: 15),
+                    retrospectiveCorrectionGroupingInterval: LoopMath
+                        .retrospectiveCorrectionGroupingInterval
+                )
+            }
 
-            totalRetrospectiveCorrectionEffect = rc.totalGlucoseCorrectionEffect
 
             var effects = [[GlucoseEffect]]()
 
@@ -342,7 +347,7 @@ public struct LoopAlgorithm {
             carbRatio: input.carbRatio,
             algorithmEffectsOptions: input.algorithmEffectsOptions,
             useIntegralRetrospectiveCorrection: input.useIntegralRetrospectiveCorrection,
-            carbAbsorptionModel: input.carbAbsorptionModel.model,
+            carbAbsorptionModel: input.carbAbsorptionModel,
             gradualTransitionsThreshold: input.gradualTransitionsThreshold
         )
     }
@@ -354,7 +359,7 @@ public struct LoopAlgorithm {
         target: GlucoseRangeTimeline,
         suspendThreshold: LoopQuantity,
         sensitivity: [AbsoluteScheduleValue<LoopQuantity>],
-        insulinModel: InsulinModel
+        insulinModel: ExponentialInsulinModel
     ) -> InsulinCorrection {
         return prediction.insulinCorrection(
             to: target,
@@ -439,7 +444,7 @@ public struct LoopAlgorithm {
     public static func recommendManualBolus(
         for correction: InsulinCorrection,
         maxBolus: Double,
-        currentGlucose: GlucoseSampleValue,
+        currentGlucose: some GlucoseSampleValue,
         target: GlucoseRangeTimeline
     ) -> ManualBolusRecommendation {
         var bolus = correction.asManualBolus(maxBolus: maxBolus)
@@ -548,7 +553,7 @@ public struct LoopAlgorithm {
                 useIntegralRetrospectiveCorrection: input.useIntegralRetrospectiveCorrection,
                 includingPositiveVelocityAndRC: input.includePositiveVelocityAndRC,
                 useMidAbsorptionISF: input.useMidAbsorptionISF,
-                carbAbsorptionModel: input.carbAbsorptionModel.model,
+                carbAbsorptionModel: input.carbAbsorptionModel,
                 gradualTransitionsThreshold: input.gradualTransitionsThreshold
             )
 

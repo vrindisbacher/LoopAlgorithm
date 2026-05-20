@@ -14,9 +14,9 @@ import FoundationShim
 
 public enum InsulinCorrection {
     case inRange
-    case aboveRange(min: GlucoseValue, correcting: GlucoseValue, minTarget: LoopQuantity, units: Double)
-    case entirelyBelowRange(min: GlucoseValue, minTarget: LoopQuantity, units: Double)
-    case suspend(min: GlucoseValue)
+    case aboveRange(min: PredictedGlucoseValue, correcting: PredictedGlucoseValue, minTarget: LoopQuantity, units: Double)
+    case entirelyBelowRange(min: PredictedGlucoseValue, minTarget: LoopQuantity, units: Double)
+    case suspend(min: PredictedGlucoseValue)
 }
 
 extension InsulinCorrection {
@@ -172,11 +172,11 @@ extension Array where Element: GlucoseValue {
         at date: Date,
         suspendThreshold: LoopQuantity,
         insulinSensitivity: [AbsoluteScheduleValue<LoopQuantity>],
-        model: InsulinModel
+        model: ExponentialInsulinModel
     ) -> InsulinCorrection {
-        var minGlucose: GlucoseValue!
-        var eventualGlucose: GlucoseValue!
-        var correctingGlucose: GlucoseValue?
+        var minGlucose: PredictedGlucoseValue!
+        var eventualGlucose: PredictedGlucoseValue!
+        var correctingGlucose: PredictedGlucoseValue?
         var minCorrectionUnits: Double?
         var effectedSensitivityAtMinGlucose: Double?
 
@@ -209,10 +209,10 @@ extension Array where Element: GlucoseValue {
 
             // If any predicted value is below the suspend threshold, return immediately
             guard prediction.quantity >= suspendThreshold else {
-                return .suspend(min: prediction)
+                return .suspend(min: PredictedGlucoseValue(startDate: prediction.startDate, quantity: prediction.quantity))
             }
 
-            eventualGlucose = prediction
+            eventualGlucose = PredictedGlucoseValue(startDate: prediction.startDate, quantity: prediction.quantity)
 
             let predictedGlucoseValue = prediction.quantity.doubleValue(for: unit)
             let time = prediction.startDate.timeIntervalSince(date)
@@ -245,7 +245,7 @@ extension Array where Element: GlucoseValue {
 
             // Update range statistics
             if minGlucose == nil || prediction.quantity < minGlucose!.quantity {
-                minGlucose = prediction
+                minGlucose = PredictedGlucoseValue(startDate: prediction.startDate, quantity: prediction.quantity)
                 effectedSensitivityAtMinGlucose = effectedSensitivity
             }
 
@@ -256,7 +256,7 @@ extension Array where Element: GlucoseValue {
             )
 
             if correctionUnits > 0 && (minCorrectionUnits == nil || correctionUnits < minCorrectionUnits!) {
-                correctingGlucose = prediction
+                correctingGlucose = PredictedGlucoseValue(startDate: prediction.startDate, quantity: prediction.quantity)
                 minCorrectionUnits = correctionUnits
             }
 

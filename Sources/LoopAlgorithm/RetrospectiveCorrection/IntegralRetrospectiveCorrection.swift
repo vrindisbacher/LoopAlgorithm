@@ -18,7 +18,7 @@ import FoundationShim
     In the above summary, "discrepancy" is a difference between the actual glucose and the model predicted glucose over retrospective correction grouping interval (set to 30 min in LoopSettings), whereas "past discrepancies" refers to a timeline of discrepancies computed over retrospective correction integration interval (set to 180 min in Loop Settings).
  
  */
-public class IntegralRetrospectiveCorrection: RetrospectiveCorrection {
+public final class IntegralRetrospectiveCorrection: RetrospectiveCorrection {
     public static let retrospectionInterval = TimeInterval(minutes: 180)
 
     /// RetrospectiveCorrection protocol variables
@@ -76,7 +76,7 @@ public class IntegralRetrospectiveCorrection: RetrospectiveCorrection {
      - totalRetrospectiveCorrection: Overall glucose effect
      */
     public func computeEffect(
-        startingAt startingGlucose: GlucoseValue,
+        startingAt startingGlucose: some GlucoseValue,
         retrospectiveGlucoseDiscrepanciesSummed: [GlucoseChange]?,
         recencyInterval: TimeInterval,
         retrospectiveCorrectionGroupingInterval: TimeInterval

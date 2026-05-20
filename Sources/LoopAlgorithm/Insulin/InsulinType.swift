@@ -7,9 +7,10 @@
 //
 
 #if !arch(wasm32)
-import Foundation
+    import Foundation
 #else
 import FoundationShim
+    import FoundationShim
 #endif
 
 public enum FixtureInsulinType: String, CaseIterable {
@@ -20,18 +21,16 @@ public enum FixtureInsulinType: String, CaseIterable {
     case lyumjev
     case afrezza
 
-    var insulinModel: InsulinModel {
+    var insulinModel: ExponentialInsulinModel {
         switch self {
         case .fiasp:
-            return ExponentialInsulinModelPreset.fiasp
+            return ExponentialInsulinModelPreset.fiasp.model
         case .lyumjev:
-            return ExponentialInsulinModelPreset.lyumjev
+            return ExponentialInsulinModelPreset.lyumjev.model
         case .afrezza:
-            return ExponentialInsulinModelPreset.afrezza
+            return ExponentialInsulinModelPreset.afrezza.model
         default:
-            return ExponentialInsulinModelPreset.rapidActingAdult
+            return ExponentialInsulinModelPreset.rapidActingAdult.model
         }
     }
 }
-
-

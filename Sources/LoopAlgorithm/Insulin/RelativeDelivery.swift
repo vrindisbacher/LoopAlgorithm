@@ -7,9 +7,10 @@
 //
 
 #if !arch(wasm32)
-import Foundation
+    import Foundation
 #else
 import FoundationShim
+    import FoundationShim
 #endif
 
 public enum BasalRelativeDoseType: Equatable {
@@ -22,7 +23,7 @@ public struct BasalRelativeDose: TimelineValue {
     public var startDate: Date
     public var endDate: Date
     public var volume: Double
-    public var insulinModel: InsulinModel
+    public var insulinModel: ExponentialInsulinModel
 
     public var duration: TimeInterval {
         return endDate.timeIntervalSince(startDate)
@@ -30,7 +31,7 @@ public struct BasalRelativeDose: TimelineValue {
 
     public init(
         type: BasalRelativeDoseType, startDate: Date, endDate: Date, volume: Double,
-        insulinModel: InsulinModel = ExponentialInsulinModelPreset.rapidActingAdult
+        insulinModel: ExponentialInsulinModel = ExponentialInsulinModelPreset.rapidActingAdult.model
     ) {
         self.type = type
         self.startDate = startDate
@@ -68,7 +69,7 @@ extension BasalRelativeDose: InsulinDose {
 }
 
 extension BasalRelativeDose {
-    static func fromBolus(dose: InsulinDose) -> BasalRelativeDose {
+    static func fromBolus<D: InsulinDose>(dose: D) -> BasalRelativeDose {
         precondition(dose.deliveryType == .bolus, "Dose passed to fromBolus() must be a bolus.")
 
         return BasalRelativeDose(

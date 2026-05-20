@@ -5,9 +5,10 @@
 //
 
 #if !arch(wasm32)
-import Foundation
+    import Foundation
 #else
 import FoundationShim
+    import FoundationShim
 #endif
 
 public struct FixtureInsulinDose: InsulinDose, Equatable {
@@ -22,8 +23,8 @@ public struct FixtureInsulinDose: InsulinDose, Equatable {
 
     public var insulinType: FixtureInsulinType?
 
-    public var insulinModel: InsulinModel {
-        insulinType?.insulinModel ?? ExponentialInsulinModelPreset.rapidActingAdult
+    public var insulinModel: ExponentialInsulinModel {
+        insulinType?.insulinModel ?? ExponentialInsulinModelPreset.rapidActingAdult.model
     }
 
     public init(

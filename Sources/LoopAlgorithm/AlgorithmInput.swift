@@ -34,7 +34,7 @@ public protocol AlgorithmInput {
     var includePositiveVelocityAndRC: Bool { get }
     var useMidAbsorptionISF: Bool { get }
     var carbAbsorptionModel: CarbAbsorptionModel { get }
-    var recommendationInsulinModel: InsulinModel { get }
+    var recommendationInsulinModel: ExponentialInsulinModel { get }
     var recommendationType: DoseRecommendationType { get }
     var automaticBolusApplicationFactor: Double? { get } // Defaults to 0.4
     var gradualTransitionsThreshold: Double? { get }

@@ -45,7 +45,7 @@ extension CarbStatus: CarbEntry {
 
 extension CarbStatus {
 
-    func dynamicCarbsOnBoard(at date: Date, defaultAbsorptionTime: TimeInterval, delay: TimeInterval, delta: TimeInterval, absorptionModel: CarbAbsorptionComputable) -> Double {
+    func dynamicCarbsOnBoard(at date: Date, defaultAbsorptionTime: TimeInterval, delay: TimeInterval, delta: TimeInterval, absorptionModel: CarbAbsorptionModel) -> Double {
         guard date >= startDate - delta,
             let absorption = absorption
         else {
@@ -81,7 +81,7 @@ extension CarbStatus {
         }, 0)
     }
 
-    func dynamicAbsorbedCarbs(at date: Date, absorptionTime: TimeInterval, delay: TimeInterval, delta: TimeInterval, absorptionModel: CarbAbsorptionComputable) -> Double {
+    func dynamicAbsorbedCarbs(at date: Date, absorptionTime: TimeInterval, delay: TimeInterval, delta: TimeInterval, absorptionModel: CarbAbsorptionModel) -> Double {
         guard date >= startDate,
             let absorption = absorption
         else {

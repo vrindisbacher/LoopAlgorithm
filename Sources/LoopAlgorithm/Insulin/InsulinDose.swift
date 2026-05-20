@@ -16,7 +16,7 @@ public protocol InsulinDose: TimelineValue {
     var startDate: Date { get }
     var endDate: Date { get }
     var volume: Double { get }
-    var insulinModel: InsulinModel { get }
+    var insulinModel: ExponentialInsulinModel { get }
 }
 
 extension InsulinDose {

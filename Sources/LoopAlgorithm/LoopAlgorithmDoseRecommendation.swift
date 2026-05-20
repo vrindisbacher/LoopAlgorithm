@@ -7,9 +7,9 @@
 //
 
 #if !arch(wasm32)
-import Foundation
+    import Foundation
 #else
-import FoundationShim
+    import FoundationShim
 #endif
 
 public struct LoopAlgorithmDoseRecommendation: Equatable {
@@ -17,7 +17,9 @@ public struct LoopAlgorithmDoseRecommendation: Equatable {
     public var manual: ManualBolusRecommendation?
     public var automatic: AutomaticDoseRecommendation?
 
-    public init(manual: ManualBolusRecommendation? = nil, automatic: AutomaticDoseRecommendation? = nil) {
+    public init(
+        manual: ManualBolusRecommendation? = nil, automatic: AutomaticDoseRecommendation? = nil
+    ) {
         self.manual = manual
         self.automatic = automatic
     }
