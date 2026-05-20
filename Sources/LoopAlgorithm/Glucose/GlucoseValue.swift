@@ -28,7 +28,7 @@ public struct SimpleGlucoseValue: Equatable, GlucoseValue {
     }
 }
 
-extension SimpleGlucoseValue: Codable {
+extension SimpleGlucoseValue {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.startDate = try container.decode(Date.self, forKey: .startDate)
@@ -65,7 +65,7 @@ public struct PredictedGlucoseValue: Equatable, GlucoseValue {
     }
 }
 
-extension PredictedGlucoseValue: Codable {
+extension PredictedGlucoseValue {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.startDate = try container.decode(Date.self, forKey: .startDate)

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum FixtureInsulinType: String, Codable, CaseIterable {
+public enum FixtureInsulinType: String, CaseIterable {
     case novolog
     case humalog
     case apidra

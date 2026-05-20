@@ -19,4 +19,4 @@ public struct LoopAlgorithmDoseRecommendation: Equatable {
     }
 }
 
-extension LoopAlgorithmDoseRecommendation: Codable {}
+extension LoopAlgorithmDoseRecommendation {}

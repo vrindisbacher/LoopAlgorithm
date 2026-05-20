@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ExponentialInsulinModelPreset: String, Codable {
+public enum ExponentialInsulinModelPreset: String {
     case rapidActingAdult
     case rapidActingChild
     case fiasp

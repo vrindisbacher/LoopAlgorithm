@@ -14,4 +14,4 @@ public enum DoseUnit: String {
     case units        = "U"
 }
 
-extension DoseUnit: Codable {}
+extension DoseUnit {}

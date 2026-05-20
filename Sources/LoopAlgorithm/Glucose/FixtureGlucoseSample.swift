@@ -33,7 +33,7 @@ public struct FixtureGlucoseSample: GlucoseSampleValue, Equatable {
     }
 }
 
-extension FixtureGlucoseSample: Codable {
+extension FixtureGlucoseSample {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 

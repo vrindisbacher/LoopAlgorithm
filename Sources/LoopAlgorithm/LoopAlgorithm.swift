@@ -48,7 +48,7 @@ public struct LoopAlgorithmEffects<CarbStatusType: CarbEntry> {
     }
 }
 
-extension LoopAlgorithmEffects<FixtureCarbEntry>: Codable {
+extension LoopAlgorithmEffects<FixtureCarbEntry> {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.insulin = try container.decode([GlucoseEffect].self, forKey: .insulin)

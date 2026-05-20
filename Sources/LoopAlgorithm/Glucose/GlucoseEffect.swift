@@ -18,7 +18,7 @@ public struct GlucoseEffect: GlucoseValue, Equatable {
     }
 }
 
-extension GlucoseEffect: Codable {
+extension GlucoseEffect {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(startDate: try container.decode(Date.self, forKey: .startDate),

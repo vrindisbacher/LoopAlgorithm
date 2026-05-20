@@ -22,4 +22,4 @@ public struct InsulinValue: TimelineValue, Equatable {
     }
 }
 
-extension InsulinValue: Codable {}
+extension InsulinValue {}

@@ -32,7 +32,7 @@ extension GlucoseChange {
     }
 }
 
-extension GlucoseChange: Codable {
+extension GlucoseChange {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.startDate = try container.decode(Date.self, forKey: .startDate)

@@ -1,6 +1,6 @@
 //
 //  AbsoluteScheduleValue.swift
-//  
+//
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
@@ -24,4 +24,4 @@ public struct AbsoluteScheduleValue<T: Sendable>: TimelineValue, Sendable {
 
 extension AbsoluteScheduleValue: Equatable where T: Equatable {}
 
-extension AbsoluteScheduleValue: Codable where T: Codable {}
+extension AbsoluteScheduleValue {}

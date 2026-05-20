@@ -63,7 +63,7 @@ public struct AbsorbedCarbValue: SampleValue {
     }
 }
 
-extension AbsorbedCarbValue: Codable {
+extension AbsorbedCarbValue {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.observed = LoopQuantity(

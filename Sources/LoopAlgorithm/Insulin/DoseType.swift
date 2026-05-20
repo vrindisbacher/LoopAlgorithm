@@ -14,4 +14,4 @@ public enum InsulinDeliveryType: String, CaseIterable, Equatable {
     case basal
 }
 
-extension InsulinDeliveryType: Codable {}
+extension InsulinDeliveryType {}

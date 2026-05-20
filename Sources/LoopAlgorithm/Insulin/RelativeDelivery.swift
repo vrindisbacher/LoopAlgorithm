@@ -75,9 +75,9 @@ extension BasalRelativeDose {
     }
 }
 
-extension BasalRelativeDoseType: Codable {}
+extension BasalRelativeDoseType {}
 
-extension BasalRelativeDose: Codable {
+extension BasalRelativeDose {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.type = try container.decode(BasalRelativeDoseType.self, forKey: .type)

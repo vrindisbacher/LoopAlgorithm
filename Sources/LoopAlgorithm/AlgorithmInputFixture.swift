@@ -40,7 +40,7 @@ public struct AlgorithmInputFixture: AlgorithmInput {
         recommendationInsulinType.insulinModel
     }
 
-    struct TargetEntry: Codable {
+    struct TargetEntry {
         var startDate: Date
         var endDate: Date
         var lowerBound: Double
@@ -99,7 +99,7 @@ public struct AlgorithmInputFixture: AlgorithmInput {
 }
 
 
-extension AlgorithmInputFixture: Codable {
+extension AlgorithmInputFixture {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 

@@ -10,7 +10,7 @@ import Foundation
 let UnitMolarMassBloodGlucose = 180.1558800000541
 let UnitMolarMassBloodGlucoseDivisible = UnitMolarMassBloodGlucose / 10
 
-public enum LoopUnit: Sendable, CaseIterable, Codable {
+public enum LoopUnit: Sendable, CaseIterable {
     case gram
     case gramsPerUnit
     case internationalUnit

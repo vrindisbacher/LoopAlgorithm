@@ -31,7 +31,7 @@ public struct FixtureInsulinDose: InsulinDose, Equatable {
     }
 }
 
-extension FixtureInsulinDose: Codable {
+extension FixtureInsulinDose {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.deliveryType = try container.decode(InsulinDeliveryType.self, forKey: .type)

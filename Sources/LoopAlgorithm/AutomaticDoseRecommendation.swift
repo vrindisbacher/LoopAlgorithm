@@ -8,9 +8,9 @@
 
 import Foundation
 
-public struct AutomaticDoseRecommendation: Equatable, Codable {
+public struct AutomaticDoseRecommendation: Equatable {
     
-    public enum Direction: String, Codable {
+    public enum Direction: String {
         case decrease
         case neutral
         case increase

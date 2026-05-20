@@ -128,4 +128,4 @@ extension CarbStatus {
     }
 }
 
-extension CarbStatus<FixtureCarbEntry>: Codable {}
+extension CarbStatus<FixtureCarbEntry> {}

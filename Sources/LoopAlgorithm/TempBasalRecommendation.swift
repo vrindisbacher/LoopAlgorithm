@@ -18,4 +18,4 @@ public struct TempBasalRecommendation: Equatable {
     }
 }
 
-extension TempBasalRecommendation: Codable {}
+extension TempBasalRecommendation {}
