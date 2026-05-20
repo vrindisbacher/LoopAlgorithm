@@ -5,7 +5,11 @@
 //  Created by Cameron Ingham on 11/8/24.
 //
 
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 
 public struct LoopQuantity: Hashable, Equatable, Comparable, Sendable {
 

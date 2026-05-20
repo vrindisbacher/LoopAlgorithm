@@ -28,28 +28,32 @@ let package = Package(
         ),
     ],
 
-    dependencies: [
-        .package(url: "https://github.com/google/flatbuffers", exact: "24.3.25")
-    ],
+    // dependencies: [
+    //     .package(url: "https://github.com/google/flatbuffers", exact: "24.3.25")
+    // ],
 
     targets: [
         .target(
             name: "LoopAlgorithm"
         ),
+        // .target(
+        //     name: "LoopAlgorithmFBS",
+        //     dependencies: [
+        //         "LoopAlgorithm",
+        //         .product(name: "FlatBuffers", package: "flatbuffers"),
+        //     ]
+        // ),
         .target(
-            name: "LoopAlgorithmFBS",
-            dependencies: [
-                "LoopAlgorithm",
-                .product(name: "FlatBuffers", package: "flatbuffers"),
-            ]
+            name: "FoundationShim"
         ),
 
         .executableTarget(
             name: "LoopWasm",
             dependencies: [
                 "LoopAlgorithm",
-                "LoopAlgorithmFBS",
-                .product(name: "FlatBuffers", package: "flatbuffers"),
+                "FoundationShim",
+                // "LoopAlgorithmFBS",
+                // .product(name: "FlatBuffers", package: "flatbuffers"),
             ]
         ),
     ],

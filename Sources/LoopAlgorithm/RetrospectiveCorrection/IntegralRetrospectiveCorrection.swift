@@ -6,7 +6,11 @@
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 
 /**
     Integral Retrospective Correction (IRC) calculates a correction effect in glucose prediction based on a timeline of past discrepancies between observed glucose movement and movement expected based on insulin and carb models. Integral retrospective correction acts as a proportional-integral-differential (PID) controller aimed at reducing modeling errors in glucose prediction.

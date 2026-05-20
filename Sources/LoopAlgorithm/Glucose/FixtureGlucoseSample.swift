@@ -5,7 +5,11 @@
 //  Copyright © 2018 LoopKit Authors. All rights reserved.
 //
 
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 
 public struct FixtureGlucoseSample: GlucoseSampleValue, Equatable {
     public static let defaultProvenanceIdentifier = "com.LoopKit.Loop"

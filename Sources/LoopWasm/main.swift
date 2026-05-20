@@ -1,7 +1,11 @@
-import FlatBuffers
+// import FlatBuffers
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 import LoopAlgorithm
-import LoopAlgorithmFBS
+// import LoopAlgorithmFBS
 
 // stub for running the loop algorithm
 @_expose(wasm, "run_algorithm")
@@ -15,13 +19,13 @@ public func run_algorithm(
     // The max length of the byte buffer (The number of bytes written is returned by the function)
     outputMaxLen: Int32
 ) -> Int32 {
-    let bb = ByteBuffer(
-        assumingMemoryBound: UnsafeMutableRawPointer(mutating: inputPtr), capacity: Int(inputLen))
-    let rootOffset = bb.read(def: Int32.self, position: bb.reader) + Int32(bb.reader)
-    let input = FBSLoopAlgorithmInputFixture(bb, o: rootOffset)
+    // let bb = ByteBuffer(
+    //     assumingMemoryBound: UnsafeMutableRawPointer(mutating: inputPtr), capacity: Int(inputLen))
+    // let rootOffset = bb.read(def: Int32.self, position: bb.reader) + Int32(bb.reader)
+    // let input = FBSLoopAlgorithmInputFixture(bb, o: rootOffset)
 
-    let algoInput = convertInput(input)
-    let output = LoopAlgorithm.run(input: algoInput)
+    // let algoInput = convertInput(input)
+    // let output = LoopAlgorithm.run(input: algoInput)
 
     // let encoder = JSONEncoder()
     // encoder.dateEncodingStrategy = .iso8601

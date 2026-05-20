@@ -5,7 +5,11 @@
 //  Copyright © 2017 LoopKit Authors. All rights reserved.
 //
 
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 
 /// A quantity of carbs absorbed over a given date interval
 public struct AbsorbedCarbValue: SampleValue {

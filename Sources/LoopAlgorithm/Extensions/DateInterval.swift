@@ -4,7 +4,11 @@
 //
 //  Created by Pete Schwamb on 10/16/24.
 //
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 
 extension DateInterval {
     func extendedForSimulation(_ delta: TimeInterval? = nil) -> DateInterval {

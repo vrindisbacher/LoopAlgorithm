@@ -5,7 +5,11 @@
 //  Copyright © 2023 LoopKit Authors. All rights reserved.
 //
 
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 
 public enum AlgorithmError: Error {
     case missingGlucose

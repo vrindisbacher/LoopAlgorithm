@@ -6,7 +6,11 @@
 //  Copyright © 2016 Nathan Racklyeft. All rights reserved.
 //
 
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 
 public struct GlucoseMath {
     public static let momentumDataInterval: TimeInterval = .minutes(15)

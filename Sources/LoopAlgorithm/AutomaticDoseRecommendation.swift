@@ -6,7 +6,11 @@
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 
 public struct AutomaticDoseRecommendation: Equatable {
 

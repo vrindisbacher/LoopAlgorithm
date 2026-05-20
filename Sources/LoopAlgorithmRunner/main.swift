@@ -5,7 +5,11 @@
 //  Created by Pete Schwamb on 9/30/24.
 //
 
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 import LoopAlgorithm
 
 // Function to read and decode the JSON file

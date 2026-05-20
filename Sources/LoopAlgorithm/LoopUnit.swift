@@ -5,7 +5,11 @@
 //  Created by Cameron Ingham on 11/8/24.
 //
 
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 
 let UnitMolarMassBloodGlucose = 180.1558800000541
 let UnitMolarMassBloodGlucoseDivisible = UnitMolarMassBloodGlucose / 10

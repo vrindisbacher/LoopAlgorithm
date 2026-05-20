@@ -5,7 +5,11 @@
 //  Copyright © 2019 LoopKit Authors. All rights reserved.
 //
 
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 
 
 /// Derives a continued glucose effect from recent prediction discrepancies

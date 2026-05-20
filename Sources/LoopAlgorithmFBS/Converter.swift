@@ -1,4 +1,8 @@
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 import LoopAlgorithm
 
 private func parseDate(_ d: Double) -> Date {

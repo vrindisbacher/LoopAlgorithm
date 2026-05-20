@@ -5,7 +5,11 @@
 //  Copyright © 2016 Nathan Racklyeft. All rights reserved.
 //
 
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 
 
 public protocol CarbEntry: SampleValue {

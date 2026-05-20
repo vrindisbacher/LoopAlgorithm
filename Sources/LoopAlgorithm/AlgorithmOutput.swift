@@ -5,7 +5,11 @@
 //  Created by Pete Schwamb on 10/13/23.
 //
 
-import Foundation
+#if !arch(wasm32)
+    import Foundation
+#else
+    import FoundationShim
+#endif
 
 public struct AlgorithmOutput<CarbEntryType: CarbEntry> {
     public var recommendationResult: Result<LoopAlgorithmDoseRecommendation, Error>

@@ -5,7 +5,11 @@
 //  Copyright © 2018 LoopKit Authors. All rights reserved.
 //
 
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 
 public struct GlucoseChange: SampleValue, Equatable {
     public var startDate: Date

@@ -5,7 +5,11 @@
 //  Created by Pete Schwamb on 2/23/24.
 //
 
+#if !arch(wasm32)
 import Foundation
+#else
+import FoundationShim
+#endif
 
 public enum AlgorithmInputFixtureDecodingError: Error {
     case invalidDoseRecommendationType
