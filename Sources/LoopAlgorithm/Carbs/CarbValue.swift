@@ -6,7 +6,6 @@
 
 import Foundation
 
-
 public struct CarbValue: SampleValue {
     public let startDate: Date
     public let endDate: Date
@@ -24,25 +23,3 @@ public struct CarbValue: SampleValue {
 }
 
 extension CarbValue: Equatable {}
-
-extension CarbValue {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.startDate = try container.decode(Date.self, forKey: .startDate)
-        self.endDate = try container.decode(Date.self, forKey: .endDate)
-        self.value = try container.decode(Double.self, forKey: .value)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(startDate, forKey: .startDate)
-        try container.encode(endDate, forKey: .endDate)
-        try container.encode(value, forKey: .value)
-    }
-
-    private enum CodingKeys: String, CodingKey {
-        case startDate
-        case endDate
-        case value
-    }
-}

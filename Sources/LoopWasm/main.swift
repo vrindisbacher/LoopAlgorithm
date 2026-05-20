@@ -23,11 +23,12 @@ public func run_algorithm(
     let algoInput = convertInput(input)
     let output = LoopAlgorithm.run(input: algoInput)
 
-    let encoder = JSONEncoder()
-    encoder.dateEncodingStrategy = .iso8601
-    let outputData = try! encoder.encode(output)
-    outputData.copyBytes(to: outputPtr, count: outputData.count)
-    return Int32(outputData.count)
+    // let encoder = JSONEncoder()
+    // encoder.dateEncodingStrategy = .iso8601
+    // let outputData = try! encoder.encode(output)
+    // outputData.copyBytes(to: outputPtr, count: outputData.count)
+    // return Int32(outputData.count)
+    return Int32(0)
 }
 
 // stub to get swift to manage allocating memory in the WASM sandbox

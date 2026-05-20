@@ -17,50 +17,6 @@ public enum BolusRecommendationNotice: Equatable {
 }
 
 extension BolusRecommendationNotice {
-    public init(from decoder: Decoder) throws {
-        if let string = try? decoder.singleValueContainer().decode(String.self) {
-            switch string {
-            case CodableKeys.predictedGlucoseInRange.rawValue:
-                self = .predictedGlucoseInRange
-            default:
-                throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "invalid enumeration"))
-            }
-        } else {
-            let container = try decoder.container(keyedByKeys.self)
-            if let glucoseBelowSuspendThreshold = try container.decodeIfPresent(GlucoseBelowSuspendThreshold.self, forKey: .glucoseBelowSuspendThreshold) {
-                self = .glucoseBelowSuspendThreshold(minGlucose: glucoseBelowSuspendThreshold.minGlucose)
-            } else if let currentGlucoseBelowTarget = try container.decodeIfPresent(CurrentGlucoseBelowTarget.self, forKey: .currentGlucoseBelowTarget) {
-                self = .currentGlucoseBelowTarget(glucose: currentGlucoseBelowTarget.glucose)
-            } else if let predictedGlucoseBelowTarget = try container.decodeIfPresent(PredictedGlucoseBelowTarget.self, forKey: .predictedGlucoseBelowTarget) {
-                self = .predictedGlucoseBelowTarget(minGlucose: predictedGlucoseBelowTarget.minGlucose)
-            } else if let allGlucoseBelowTarget = try container.decodeIfPresent(AllGlucoseBelowTarget.self, forKey: .allGlucoseBelowTarget) {
-                self = .allGlucoseBelowTarget(minGlucose: allGlucoseBelowTarget.minGlucose)
-            } else {
-                throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "invalid enumeration"))
-            }
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        switch self {
-        case .glucoseBelowSuspendThreshold(let minGlucose):
-            var container = encoder.container(keyedByKeys.self)
-            try container.encode(GlucoseBelowSuspendThreshold(minGlucose: SimpleGlucoseValue(minGlucose)), forKey: .glucoseBelowSuspendThreshold)
-        case .currentGlucoseBelowTarget(let glucose):
-            var container = encoder.container(keyedByKeys.self)
-            try container.encode(CurrentGlucoseBelowTarget(glucose: SimpleGlucoseValue(glucose)), forKey: .currentGlucoseBelowTarget)
-        case .predictedGlucoseBelowTarget(let minGlucose):
-            var container = encoder.container(keyedByKeys.self)
-            try container.encode(PredictedGlucoseBelowTarget(minGlucose: SimpleGlucoseValue(minGlucose)), forKey: .predictedGlucoseBelowTarget)
-        case .predictedGlucoseInRange:
-            var container = encoder.singleValueContainer()
-            try container.encode(CodableKeys.predictedGlucoseInRange.rawValue)
-        case .allGlucoseBelowTarget(minGlucose: let minGlucose):
-            var container = encoder.container(keyedByKeys.self)
-            try container.encode(AllGlucoseBelowTarget(minGlucose: SimpleGlucoseValue(minGlucose)), forKey: .allGlucoseBelowTarget)
-        }
-    }
-
     private struct GlucoseBelowSuspendThreshold {
         let minGlucose: SimpleGlucoseValue
     }
@@ -99,7 +55,7 @@ public struct ManualBolusRecommendation {
 extension ManualBolusRecommendation {}
 
 extension ManualBolusRecommendation: Equatable {
-    public static func ==(lhs: ManualBolusRecommendation, rhs: ManualBolusRecommendation) -> Bool {
+    public static func == (lhs: ManualBolusRecommendation, rhs: ManualBolusRecommendation) -> Bool {
         return lhs.amount == rhs.amount
     }
 }

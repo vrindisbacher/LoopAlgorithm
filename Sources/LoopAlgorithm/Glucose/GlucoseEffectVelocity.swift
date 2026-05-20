@@ -6,7 +6,6 @@
 
 import Foundation
 
-
 /// The first-derivative of GlucoseEffect, blood glucose over time.
 public struct GlucoseEffectVelocity: SampleValue {
     public let startDate: Date
@@ -19,7 +18,6 @@ public struct GlucoseEffectVelocity: SampleValue {
         self.quantity = quantity
     }
 }
-
 
 extension GlucoseEffectVelocity {
     public static let perSecondUnit = LoopUnit.milligramsPerDeciliterPerSecond
@@ -36,30 +34,5 @@ extension GlucoseEffectVelocity {
                 doubleValue: velocityPerSecond * duration
             )
         )
-    }
-}
-
-extension GlucoseEffectVelocity {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.startDate = try container.decode(Date.self, forKey: .startDate)
-        self.endDate = try container.decode(Date.self, forKey: .endDate)
-        self.quantity = LoopQuantity(
-            unit: GlucoseEffectVelocity.perSecondUnit,
-            doubleValue: try container.decode(Double.self, forKey: .mgdlPerSecond)
-        )
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(startDate, forKey: .startDate)
-        try container.encode(endDate, forKey: .endDate)
-        try container.encode(quantity.doubleValue(for: GlucoseEffectVelocity.perSecondUnit), forKey: .mgdlPerSecond)
-    }
-
-    private enum CodingKeys: String, CodingKey {
-        case startDate
-        case endDate
-        case mgdlPerSecond
     }
 }

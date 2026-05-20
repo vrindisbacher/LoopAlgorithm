@@ -1,6 +1,6 @@
 //
 //  BasalRelativeDose.swift
-//  
+//
 //
 //  Created by Pete Schwamb on 12/21/23.
 //  Copyright © 2023 LoopKit Authors. All rights reserved.
@@ -24,7 +24,10 @@ public struct BasalRelativeDose: TimelineValue {
         return endDate.timeIntervalSince(startDate)
     }
 
-    public init(type: BasalRelativeDoseType, startDate: Date, endDate: Date, volume: Double, insulinModel: InsulinModel = ExponentialInsulinModelPreset.rapidActingAdult) {
+    public init(
+        type: BasalRelativeDoseType, startDate: Date, endDate: Date, volume: Double,
+        insulinModel: InsulinModel = ExponentialInsulinModelPreset.rapidActingAdult
+    ) {
         self.type = type
         self.startDate = startDate
         self.endDate = endDate
@@ -60,11 +63,10 @@ extension BasalRelativeDose: InsulinDose {
     }
 }
 
-
 extension BasalRelativeDose {
     static func fromBolus(dose: InsulinDose) -> BasalRelativeDose {
         precondition(dose.deliveryType == .bolus, "Dose passed to fromBolus() must be a bolus.")
-        
+
         return BasalRelativeDose(
             type: .bolus,
             startDate: dose.startDate,
@@ -76,32 +78,3 @@ extension BasalRelativeDose {
 }
 
 extension BasalRelativeDoseType {}
-
-extension BasalRelativeDose {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.decode(BasalRelativeDoseType.self, forKey: .type)
-        self.startDate = try container.decode(Date.self, forKey: .startDate)
-        self.endDate = try container.decode(Date.self, forKey: .endDate)
-        self.volume = try container.decode(Double.self, forKey: .volume)
-        // Not encoded atm. Could at some point define some "fixture" models"
-        self.insulinModel = ExponentialInsulinModelPreset.rapidActingAdult.model
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(type, forKey: .type)
-        try container.encode(startDate, forKey: .startDate)
-        try container.encode(endDate, forKey: .endDate)
-        try container.encode(volume, forKey: .volume)
-    }
-
-    private enum CodingKeys: String, CodingKey {
-        case type
-        case startDate
-        case endDate
-        case volume
-    }
-
-}
-
